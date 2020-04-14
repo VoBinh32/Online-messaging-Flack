@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Flack
+{% endblock %}
+
+{% block main %}
+
+<h4>Enter your username and sign in to start chatting!</h4>
+<form action="/login" method="POST">
+    <div class="form-group">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Display name">
+    </div>
+    <button class="btn btn-primary" type="submit">Log In</button>
+</form>
+
+{% endblock %}
