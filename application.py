@@ -1,5 +1,4 @@
 import os
-import time
 
 from collections import deque
 from flask import Flask, render_template, session, request, redirect
@@ -14,7 +13,7 @@ socketio = SocketIO(app)
 
 channels = []
 users = []
-my_messages = dict()
+messages = dict()
 
 
 @app.route("/")
@@ -55,12 +54,38 @@ def logout():
 @app.route("/create", methods=["POST"])
 def create():
     new_channel = request.form.get("channel")
-    if not new_channel:
-        return render_template("apology.html", message="you must provide a channel name!")
-    if new_channel in channels:
-        return render_template("apology.html", message="channel name already exits!")
+    if request.method == "POST":
+        if not new_channel:
+            return render_template("apology.html", message="you must provide a channel name!")
+        if new_channel in channels:
+            return render_template("apology.html", message="channel name already exits!")
         
-    channels.append(new_channel)
-    my_messages[new_channel] = deque()
+        channels.append(new_channel)
+        messages[new_channel] = deque()
 
-    return redirect("/channels/" + new_channel)
+        return redirect("/channels/" + new_channel)
+    else:
+        return render_template("index.html", channels=channels)
+
+@app.route("/channels/<channel>", methods=["GET","POST"])
+@login_required
+def enter(channel):
+    session["current_channel"] = channel
+    if request.method == "POST":
+        return redirect("/")
+    else:
+        return render_template("channel.html", channels=channels, messages=messages)
+
+@socketio.on("joined", namespace='/')
+def left():
+    room = session.get('current_chaneel')
+
+    leave_room(room)
+
+    emit('status')
+
+
+
+
+
+
