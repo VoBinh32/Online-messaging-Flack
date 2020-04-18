@@ -45,7 +45,10 @@ def login():
 
 @app.route("/logout", methods=['GET'])
 def logout():
-    users.remove(session['username'])
+    try:
+        users.remove(session['username'])
+    except ValueError:
+        pass
 
     session.clear()
     return redirect("/")
@@ -77,15 +80,39 @@ def enter(channel):
         return render_template("channel.html", channels=channels, messages=messages)
 
 @socketio.on("joined", namespace='/')
+def joined():
+    room = session.get('current_channel')
+
+    join_room(room)
+
+    emit('status', {
+        'users': session.get('username'),
+        'channel': room,
+        'msg': session.get('username') + "has entered the chat"},
+        room = room)
+
+@socketio.on("left", namespace='/')
 def left():
-    room = session.get('current_chaneel')
+    room =  seesion.get('current_channel')
 
     leave_room(room)
 
-    emit('status')
+    emit('status', {
+        'msg': session.get('username') + "just left the chat"},
+        room = room)
 
+@socketio.on("send message")
+def send_msg(msg, timestamp):
 
+    room = session.get('current_channel')
 
+    if len(messages[room]) > 100:
+        messages[room].popleft()
 
-
-
+    messages[room].append([timestamp, session.get('username'), msg])
+    
+    emit('announce message', {
+        'user': session.get('username'),
+        'timestamp': timestamp,
+        'msg': msg},
+        room = room)

@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<script src="/static/scripts.js"></script>
+{% endblock %}
+
 {% block title %}
 {{ session.current_channel }}
 {% endblock %}
@@ -11,14 +15,17 @@
             {{ session.current_channel }}
         </span>
     </h1>
+
 </div>
 <div class="container-channel custom-window">
     <div id="chat-box" class="list-group">
+
         <textarea id="chat" cols="30" rows="20" readonly>
             {%- if messages -%} 
                 {%- for message in messages -%}
                     <{{ message[0] }}> - [{{ message[1] }}]: {{ message [2] }} {{'\n'}}
                 {%- endfor -%}
+                {{ '----- These are old messages -----' }}{{- '\n' -}}
             {%- endif -%}
         </textarea>
     </div>
@@ -40,9 +47,9 @@
             </div>
         </div>
     </div>
-
     <div id="file-selector">
         <input type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
     </div>
 </div>
+
 {% endblock %}
