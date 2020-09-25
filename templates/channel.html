@@ -9,23 +9,18 @@
 {% endblock %}
 
 {% block main %}
-<div>
-    <h1 style="margin-bottom: 1rem">
-        <span class="badge badge-dark">
-            {{ session.current_channel }}
-        </span>
-    </h1>
-
+<div class="alert alert-primary" role="alert">
+    <h1 style="text-align:center"><strong>{{ session.current_channel }}</strong></h1>
 </div>
+
+<!-- Minus(-) used to strip all the whitespace in Jinja-->
 <div class="container-channel custom-window">
     <div id="chat-box" class="list-group">
-
         <textarea id="chat" cols="30" rows="20" readonly>
             {%- if messages -%} 
                 {%- for message in messages -%}
                     <{{ message[0] }}> - [{{ message[1] }}]: {{ message [2] }} {{'\n'}}
                 {%- endfor -%}
-                {{ '----- These are old messages -----' }}{{- '\n' -}}
             {%- endif -%}
         </textarea>
     </div>
@@ -33,22 +28,27 @@
     <div id="message-box">
         <div class="form-border">
             <div class="form-row">
-                <div class="form-group col-sm">
+                <div class="form-group col-sm-11">
                     <div class="input-group">
-                        <input id="comment" class="form-control" size="50" autocomplete="off" autofocus>
+                        <input id="comment" class="form-control" size="60" autocomplete="off" autofocus
+                            placeholder="Type in a message...">
                     </div>
                 </div>
-                <div class="form-group col-sm-2">
-                    <button id="send-button" class="btn btn-success" type="reset">Send</button>
+                <div class="form-group col-sm">
+                    <button id="send-button" class="btn btn-primary" type="reset">Send</button>
                 </div>
-                <div class="form-group col-sm-1">
-                    <button id="leave" type="button" class="btn btn-warning">Leave channel</button>
+                <div class="form-group col-sm">
+                    <button id="leave" type="button" class="btn btn-secondary">Leave channel</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="file-selector">
-        <input type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+    <!--  Supporting use attachments (file uploads) as messages-->
+    <div>
+        <form action="/action_page.php">
+            <label for="img">Select image:</label>
+            <input type="file" id="img" name="img" accept="image/*">
+        </form>
     </div>
 </div>
 

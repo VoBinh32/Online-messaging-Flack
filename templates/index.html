@@ -5,18 +5,17 @@ Flack Chat
 {% endblock %}
 
 {% block main %}
-<h2>Create or join a channel!</h2>
+<h2>Create a channel!</h2>
 <form action="/create" method="post">
     <div class="form-group">
-        <input type="text" class="form-control" name="channel" id="channel" autofocus>
+        <input type="text" class="form-control" name="channel" id="channel" autofocus placeholder="Channel Name">
     </div>
     <button class="btn btn-primary" type="submit">Create</button>
 </form>
 
 <script>
-
+    // Redirect to the last page user have visited
     if (localStorage.getItem('last_channel')) {
-        // Redirect to last channel
         let channel = localStorage.getItem('last_channel');
         window.location.replace('/channels/' + channel);
     }
