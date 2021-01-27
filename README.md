@@ -1,3 +1,46 @@
-Step 1: Run pip3 install -r requirements.txt in your terminal window to make sure that all of the necessary Python packages (Flask and Flask-SocketIO, for instance) are installed.
-Step 2: Set the environment variable FLASK_APP to be application.py. On a Mac or on Linux, the command to do this is export FLASK_APP=application.py. On Windows, the command is instead set FLASK_APP=application.py.
-Step 3: Run flask run to start up your Flask application...
+# Online Chat App
+
+## Web Programming with Python and JavaScript
+
+[Project Instructions](https://docs.cs50.net/web/2019/x/projects/2/project2.html)
+
+## App Screenshots
+
+![Login Page]()
+![Login Page]()
+![Login Page]()
+![Login Page]()
+![Login Page]()
+
+## Usage
+
+1. Display Name, Channel Creation, and Channel List.
+2. Messages View and Sending Messages.
+3. Remembering the Channel.
+4. Upload File Support
+5. Logout
+
+## Setup
+
+```
+# Clone repo
+$ git clone https://github.com/VoBinh32/Online-messaging-Flack.git
+
+
+# Install all dependencies
+$ pip install -r requirements.txt
+
+# ENV Variables
+$ set FLASK_APP=application.py
+$ set FLASK_DEBUG = 1
+
+To run the application execute the command:
+$ flask run
+The flask application should now be running on http://127.0.0.1:5000/
+```
+
+## Architecture and Design
+
+1. This application uses [Flask](https://flask.palletsprojects.com/en/1.1.x/), a Python micro-framework that helps with RESTful handling of data, application routing and template binding for rendering the data.
+2. It also takes the use of SocketIO which allows 'asynchronous' communication between the server and client.
+3. The front-end also makes use of a more basic form of asynchronous request known as an 'AJAX' request. Put simply, this is a standard HTTP request like those made by a browser when requesting a webpage, but made instead by the Javascript running in the client's browser while in use.
